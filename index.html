@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lead Submission Form</title>
+    <style>
+        body { font-family: sans-serif; padding: 50px; background: #f0f0f0; }
+        .container { background: white; padding: 30px; border-radius: 8px; max-width: 500px; margin: 0 auto; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;}
+        button { background-color: #4CAF50; color: white; padding: 15px; border: none; width: 100%; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🏠 Real Estate Lead Bot</h2>
+    <form id="leadForm">
+        <label>Client Name:</label>
+        <input type="text" id="name" placeholder="e.g. Bob Builder">
+
+        <label>Email Body (The "Lead"):</label>
+        <textarea id="resume_text" rows="6" placeholder="Paste the email here..."></textarea>
+
+        <button type="button" onclick="sendData()">Process Lead 🚀</button>
+    </form>
+</div>
+
+<script>
+    function sendData() {
+        // 1. YOUR WEBHOOK URL GOES HERE 👇
+        const webhookUrl = "https://hook.eu1.make.com/sj1ems99i66fvurqwbyvtc276ruic6ss"; 
+
+        // 2. Grab data from the form
+        const payload = {
+            name: document.getElementById("name").value,
+            resume_text: document.getElementById("resume_text").value
+        };
+
+        // 3. Send it to Make (just like curl did!)
+        fetch(webhookUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        })
+        .then(response => {
+            alert("✅ Lead Sent to AI!");
+            document.getElementById("leadForm").reset();
+        })
+        .catch(error => alert("❌ Error: " + error));
+    }
+</script>
+
+</body>
+</html>
